@@ -50,7 +50,7 @@ def simple_retrieve(query: str, dataset, k: int = 3):
 
 
 def load_documents():
-    docs_dir = Path(__file__).resolve().parent / "docs"
+    docs_dir = Path(__file__).resolve().parent.parent / "example_warranty_docs"
     texts = []
     for path in sorted(docs_dir.glob("*.txt")):
         texts.append(path.read_text())
@@ -75,7 +75,11 @@ def main():
     console.print("[bold green]Acme Homes Warranty Assistant[/bold green]")
     docs_list = "\n".join(
         f"{i+1}. {Path(p).name}"
-        for i, p in enumerate(sorted((Path(__file__).parent / "docs").glob("*.txt")))
+        for i, p in enumerate(
+            sorted(
+                (Path(__file__).parent.parent / "example_warranty_docs").glob("*.txt")
+            )
+        )
     )
 
     while True:
