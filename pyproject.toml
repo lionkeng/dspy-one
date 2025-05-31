@@ -13,10 +13,11 @@ dependencies = [
 [project.scripts]
 simple-math-cli = "simple_math.main:main"
 doc-qa-cli = "doc_qa.main:main"
+docs-qa-validate-cli = "docs_qa_validate_answer.main:main"
 
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [tool.hatch.build.targets.wheel]
-packages = ["simple_math", "doc_qa"]
+packages = ["simple_math", "doc_qa", "docs_qa_validate_answer", "qa_common"]
