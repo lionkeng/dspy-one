@@ -23,12 +23,12 @@ source .venv/bin/activate
 uv pip install .
 
 # 6. Prompt for .env setup
-if [ ! -f .env ]; then
-    echo "OPENAI_API_KEY=\"your_openai_api_key_here\"" > .env
-    echo "A .env file has been created. Please edit it to add your OpenAI API key."
-else
-    echo ".env file already exists. Please ensure it contains your OpenAI API key."
-fi
+# if [ ! -f .env ]; then
+#     echo "OPENAI_API_KEY=\"your_openai_api_key_here\"" > .env
+#     echo "A .env file has been created. Please edit it to add your OpenAI API key."
+# else
+#     echo ".env file already exists. Please ensure it contains your OpenAI API key."
+# fi
 
 echo "Setup complete! To run the example:"
 echo "source .venv/bin/activate"
