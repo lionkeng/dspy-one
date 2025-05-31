@@ -50,6 +50,24 @@ uv run doc-qa-cli
 
 This CLI automatically loads sample warranty documents for Acme Homes and lets you ask questions or generate summaries.
 
+## Example Descriptions
+
+### `simple_math`
+
+This introductory example demonstrates how DSPy can be used to build a very small QA system. It defines a short signature (`BasicQA`) and a module (`ArithmeticQA`) that wraps `dspy.ChainOfThought` to answer arithmetic questions interactively. The CLI uses `rich` for prompts and configures an OpenAI model via `dspy.LM`.
+
+### `doc_qa`
+
+The document QA example showcases retrieval-augmented generation and summarization. It automatically loads a set of warranty documents, performs a simple keyword-based retrieval to supply context, and then answers questions using `dspy.ChainOfThought`.
+
+**Key DSPy features**
+
+- Retrieval: Use DSPy’s retrieval utilities to build embeddings from the documents and fetch relevant passages.
+
+- Chaining Modules: Compose multiple modules—one for retrieval and one for generating answers or summaries.
+
+- Signatures with Richer Output: Instead of short factoid answers, use multi-sentence outputs (summaries) and structured data fields.
+
 ## Contributing More Examples
 
 - Add a new directory (e.g., `my_example/`) with an `__init__.py` and your code.

@@ -3,10 +3,8 @@ from pathlib import Path
 from dotenv import load_dotenv
 from rich.console import Console
 from rich.prompt import Prompt
+from rich.text import Text
 import dspy
-
-# Ensure litellm does not attempt network calls for model cost map
-os.environ.setdefault("LITELLM_LOCAL_MODEL_COST_MAP", "True")
 
 
 class AnswerQuestion(dspy.Signature):
@@ -75,10 +73,14 @@ def main():
     module = DocQAModule(dataset)
 
     console.print("[bold green]Acme Homes Warranty Assistant[/bold green]")
-    docs_list = "\n".join(f"{i+1}. {Path(p).name}" for i, p in enumerate(sorted((Path(__file__).parent / "docs").glob("*.txt"))))
+    docs_list = "\n".join(
+        f"{i+1}. {Path(p).name}"
+        for i, p in enumerate(sorted((Path(__file__).parent / "docs").glob("*.txt")))
+    )
 
     while True:
-        action = Prompt.ask("Choose [qa] question, [sum] summarize, or [exit]")
+        prompt_text = Text("Choose [qa] question, [sum] summarize, or [exit]")
+        action = Prompt.ask(prompt_text)
         if action.lower() == "exit":
             break
         if action.lower() == "qa":
