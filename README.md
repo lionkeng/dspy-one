@@ -50,6 +50,14 @@ uv run doc-qa-cli
 
 This CLI automatically loads sample warranty documents for Acme Homes and lets you ask questions or generate summaries.
 
+### Run the `docs_qa_validate_answer` example
+
+```sh
+uv run docs-qa-validate-cli
+```
+
+This variant retries answering a question up to three times while a judge model scores the response.
+
 ## Example Descriptions
 
 ### `simple_math`
@@ -67,6 +75,10 @@ The document QA example showcases retrieval-augmented generation and summarizati
 - Chaining Modules: Compose multiple modules—one for retrieval and one for generating answers or summaries.
 
 - Signatures with Richer Output: Instead of short factoid answers, use multi-sentence outputs (summaries) and structured data fields.
+
+## Improving Retrieval with Bigrams and IDF
+
+`simple_retrieve` now supports scoring based on both individual words and word pairs (bigrams). For each document, bigrams that match the query contribute more weight, and each term is scaled by its _inverse document frequency_ (IDF), which lowers the impact of common words. This IDF weighting is computed once when the module loads the dataset. Using bigrams and IDF helps rank documents more consistently than random shuffling because matches on rare phrases are prioritized.
 
 ## Contributing More Examples
 
