@@ -42,6 +42,14 @@ uv run simple-math-cli
 
 You will be prompted to enter arithmetic questions, and the program will answer them using DSPy and OpenAI.
 
+### Run the `doc_qa` example
+
+```sh
+uv run doc-qa-cli
+```
+
+This example showcases gated reasoning over a provided context passage.
+
 ## Contributing More Examples
 
 - Add a new directory (e.g., `my_example/`) with an `__init__.py` and your code.
