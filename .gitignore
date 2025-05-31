@@ -8,10 +8,8 @@ __pycache__/
 .mypy_cache/
 .coverage
 .coverage.*
-.coverage.*
 
 # Byte-compiled / optimized / DLL files
-__pycache__/
 *.py[cod]
 *$py.class
 
@@ -52,15 +50,12 @@ pip-delete-this-directory.txt
 htmlcov/
 .tox/
 .nox/
-.coverage
-.coverage.*
 .cache
 nosetests.xml
 coverage.xml
 *.cover
 *.py,cover
 .hypothesis/
-.pytest_cache/
 cover/
 
 # Translations
@@ -140,7 +135,6 @@ celerybeat.pid
 *.sage.py
 
 # Environments
-.env
 .venv
 env/
 venv/
@@ -159,7 +153,6 @@ venv.bak/
 /site
 
 # mypy
-.mypy_cache/
 .dmypy.json
 dmypy.json
 
@@ -193,7 +186,6 @@ cython_debug/
 # .vscode/
 
 # Ruff stuff:
-.ruff_cache/
 
 # PyPI configuration file
 .pypirc
