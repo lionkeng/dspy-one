@@ -1,6 +1,6 @@
 # dspy-examples
 
-A collection of CLI programs that demonstrate the use of [DSPy](https://dspy.ai/api/).
+This repository showcases a series of CLI programs that illustrate the capabilities of [DSPy](https://dspy.ai/api/). The examples are designed to gradually increase in complexity, starting from simple to more advanced use cases.
 
 ## Installation
 
