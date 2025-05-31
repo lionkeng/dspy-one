@@ -2,13 +2,24 @@ import dspy
 
 # Import common components
 from qa_common.main import (
-    AnswerQuestion,  # Replaces local AnswerQuestion
     SummarizeDoc,  # Replaces local SummarizeDoc
     load_documents,  # Replaces local load_documents
     compute_idf,  # Replaces local compute_idf
     initialize_dspy,  # For setting up dspy and console
     run_qa_loop,  # For the main interaction loop
 )
+
+
+# Implement the AnswerQuestion signature with persona guidance
+class AnswerQuestion(dspy.Signature):
+    """Answer warranty questions influenced by persona and brand voice."""
+
+    question = dspy.InputField()
+    context = dspy.InputField()
+    persona = dspy.InputField(desc="persona to adopt")
+    brand_voice = dspy.InputField(desc="brand voice guidelines")
+    tone = dspy.InputField(desc="tone of the response")
+    answer = dspy.OutputField()
 
 
 # This signature is unique to this module
@@ -21,7 +32,7 @@ class JudgeAnswer(dspy.Signature):
 
 
 class ValidateDocQAModule(dspy.Module):
-    def __init__(self, dataset):
+    def __init__(self, dataset, persona: str, brand_voice: str, tone: str):
         super().__init__()
         self.dataset = dataset
         self.idf = compute_idf(dataset)  # Use imported compute_idf
@@ -29,6 +40,9 @@ class ValidateDocQAModule(dspy.Module):
         self.answer = dspy.ChainOfThought(AnswerQuestion)
         self.judge = dspy.Predict(JudgeAnswer)
         self.summarize = dspy.Predict(SummarizeDoc)
+        self.persona = persona
+        self.brand_voice = brand_voice
+        self.tone = tone
 
     def forward(self, question):
         best_answer = None
@@ -40,7 +54,14 @@ class ValidateDocQAModule(dspy.Module):
                     question, self.dataset, k=3 + attempt, variation=attempt
                 )
             )
-            pred = self.answer(question=question, context=context)
+            # Pass persona, brand_voice, and tone to the answer module
+            pred = self.answer(
+                question=question,
+                context=context,
+                persona=self.persona,
+                brand_voice=self.brand_voice,
+                tone=self.tone,
+            )
             critique = self.judge(question=question, answer=pred.answer)
             try:
                 score = float(critique.rating)
@@ -94,9 +115,13 @@ def main():
         # initialize_dspy now raises ValueError if OPENAI_API_KEY is not found
         # and prints a message, so we can just return.
         return
-
+    persona = "knowledgeable customer support agent to help with Acme Homes warranty"
+    brand_voice = "Acme Homes is a trusted brand in home builder. The key pillars of our are brand are quality, reliability, and customer satisfaction."
+    tone = "friendly, professional, empathetic, and helpful"
     dataset = load_documents()
-    module = ValidateDocQAModule(dataset)
+    module = ValidateDocQAModule(
+        dataset, persona=persona, brand_voice=brand_voice, tone=tone
+    )
 
     # Pass the app_name to the common loop
     run_qa_loop(

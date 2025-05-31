@@ -58,6 +58,14 @@ uv run docs-qa-validate-cli
 
 This variant retries answering a question up to three times while a judge model scores the response.
 
+### Run the `docs_qa_validate_answer_with_persona` example
+
+```sh
+uv run docs-qa-validate-persona-cli
+```
+
+This version also shapes answers according to a specified persona, brand voice, and tone.
+
 ## Example Descriptions
 
 ### `simple_math`
