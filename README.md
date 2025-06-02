@@ -66,6 +66,111 @@ uv run docs-qa-validate-persona-cli
 
 This version also shapes answers according to a specified persona, brand voice, and tone.
 
+### Run the `no_dspy` example
+
+```sh
+uv run no-dspy-cli
+```
+
+This example mirrors `docs_qa_validate_answer_with_persona` but is implemented with LangChain instead of DSPy.
+
+### Run the `cloudflare_mcp` example
+
+```sh
+uv run cloudflare-mcp-cli
+```
+
+This example connects to Cloudflare's documentation via MCP and provides AI-powered search and summarization. You can ask questions about Cloudflare Workers, Pages, and other services interactively.
+
+### Run the `echo_server_mcp` example
+
+```sh
+uv run echo-server-mcp
+```
+
+This starts a local MCP server that echoes back any input it receives. Useful for testing MCP client connections and understanding the protocol.
+
+### `cloudflare_mcp`
+
+This advanced example demonstrates real-world integration with external documentation sources through the Model Context Protocol (MCP). The `CloudflareMCPModule` connects to Cloudflare's documentation server, searches for relevant information, and provides AI-powered summarization of the results.
+
+**Key Features:**
+
+- **MCP Integration**: Uses the Model Context Protocol to connect to live documentation servers
+- **Fresh Connections**: Creates new connections per query to avoid async cleanup issues
+- **AI Summarization**: Leverages DSPy with OpenAI to generate intelligent summaries
+- **Fallback Mode**: Gracefully degrades to simple summarization when no LM is configured
+- **Rich Formatting**: Beautiful terminal output with progress indicators and structured display
+
+**Architecture:**
+
+- `CloudflareMCPModule`: Main DSPy module that handles MCP connections and summarization
+- `MCPResultFormatter`: Rich formatting utilities for beautiful terminal output
+- Fresh connection strategy eliminates persistent connection management
+
+#### Demo Scripts
+
+The `demo/` directory contains several demonstration scripts showcasing different aspects of the system:
+
+**`demo_clean_summary.py`** - Minimal demo showing clean Q&A output:
+
+```sh
+uv run demo/demo_clean_summary.py
+```
+
+**`demo_rich_formatting.py`** - Showcases the beautiful rich terminal formatting:
+
+```sh
+uv run demo/demo_rich_formatting.py
+```
+
+**`demo_dspy_summarization.py`** - Comprehensive test with multiple questions:
+
+```sh
+uv run demo/demo_dspy_summarization.py
+```
+
+**`dspy_prediction_demo.py`** - Educational demo explaining DSPy Prediction objects:
+
+```sh
+uv run demo/dspy_prediction_demo.py
+```
+
+#### Testing
+
+**`cloudflare_mcp/test_cloudflare_mcp.py`** - Comprehensive test suite that:
+
+- Tests multiple query types and edge cases
+- Validates the fresh connection approach
+- Demonstrates error handling and recovery
+- Verifies AI summarization quality
+
+```sh
+uv run cloudflare_mcp/test_cloudflare_mcp.py
+```
+
+This example showcases how DSPy can be integrated with modern protocols like MCP to create intelligent documentation search systems with robust error handling and beautiful user interfaces.
+
+### `echo_server_mcp`
+
+This simple example provides a minimal MCP (Model Context Protocol) server implementation using FastMCP. The server exposes a single `echo` tool that returns whatever input it receives, making it perfect for testing MCP client implementations and understanding the protocol basics.
+
+**Key Features:**
+
+- **FastMCP Implementation**: Uses the FastMCP library for easy server creation
+- **SSE Transport**: Runs on Server-Sent Events for real-time communication
+- **Single Echo Tool**: Provides a simple `echo(query: str) -> dict` function
+- **Local Testing**: Runs on localhost:8000 for local development and testing
+
+**Use Cases:**
+
+- Testing MCP client implementations (like the cloudflare_mcp example)
+- Understanding MCP protocol fundamentals
+- Development and debugging of MCP-based applications
+- Educational purposes for learning about tool-based AI architectures
+
+The server starts on port 8000 and can be accessed by any MCP-compatible client. It's particularly useful when developing and testing the `cloudflare_mcp` example or other MCP clients.
+
 ## Example Descriptions
 
 ### `simple_math`
@@ -78,11 +183,15 @@ The document QA example showcases retrieval-augmented generation and summarizati
 
 **Key DSPy features**
 
-- Retrieval: Use DSPy’s retrieval utilities to build embeddings from the documents and fetch relevant passages.
+- Retrieval: Use DSPy's retrieval utilities to build embeddings from the documents and fetch relevant passages.
 
 - Chaining Modules: Compose multiple modules—one for retrieval and one for generating answers or summaries.
 
 - Signatures with Richer Output: Instead of short factoid answers, use multi-sentence outputs (summaries) and structured data fields.
+
+### `no_dspy`
+
+This companion example implements the same validated QA workflow using LangChain instead of DSPy, showcasing how to build the flow without DSPy modules
 
 ## Improving Retrieval with Bigrams and IDF
 

@@ -102,23 +102,31 @@ def run_qa_loop(module, dataset, console, app_name="Warranty Assistant"):
     )
 
     while True:
-        prompt_text = Text("Choose [qa] question, [sum] summarize, or [exit]")
-        action = Prompt.ask(prompt_text)
+        if dataset:
+            prompt_text = Text("Choose [qa] question, [sum] summarize, or [exit]")
+            action = Prompt.ask(prompt_text)
 
-        action_lower = action.lower()  # Normalize once
-
+            action_lower = action.lower()  # Normalize once
+        else:
+            action_lower = "qa"
         if action_lower == "exit":
             break
         elif action_lower == "qa":
-            q = Prompt.ask("Enter your question")
+            q = Prompt.ask("Enter your question (or 'exit' to quit)")
+            if q.lower() == "exit":
+                break
             if not q.strip():
                 console.print("[yellow]Please enter a question.[/yellow]")
                 continue
             try:
+                # Display the question with bold blue Q. prefix
+                console.print(f"[bold blue]Q.[/bold blue] {q}")
                 pred = module(q)  # Assumes module has a forward method for QA
                 console.print(f"[bold blue]A:[/bold blue] {pred.answer}")
+                console.print()  # Add newline for spacing before next iteration
             except Exception as e:
                 console.print(f"[bold red]Error processing QA:[/bold red] {e}")
+                console.print()  # Add newline even after errors
 
         elif action_lower == "sum":
             if not dataset:
