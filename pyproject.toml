@@ -3,11 +3,15 @@ name = "dspy-examples"
 version = "0.1.0"
 description = "A collection of CLI programs that demonstrate DSPy."
 authors = [{ name = "Keng Lim", email = "lionkeng@gmail.com" }]
-requires-python = ">=3.9"
+requires-python = ">=3.10"
 dependencies = [
   "dspy-ai",
-  "python-dotenv", # For managing API keys
-  "rich",          # For better CLI output
+  "fastmcp>=2.5.2",
+  "langchain>=0.3.25",
+  "langchain-openai>=0.3.18",
+  "mcp[cli]>=1.9.2",
+  "python-dotenv",            # For managing API keys
+  "rich",                     # For better CLI output
 ]
 
 [project.scripts]
@@ -15,6 +19,9 @@ simple-math-cli = "simple_math.main:main"
 doc-qa-cli = "doc_qa.main:main"
 docs-qa-validate-cli = "docs_qa_validate_answer.main:main"
 docs-qa-validate-persona-cli = "docs_qa_validate_answer_with_persona.main:main"
+no-dspy-cli = "no_dspy.main:main"
+cloudflare-mcp-cli = "cloudflare_mcp.main:main"
+echo-server-mcp = "echo_server_mcp.main:main"
 
 [build-system]
 requires = ["hatchling"]
@@ -27,4 +34,7 @@ packages = [
   "docs_qa_validate_answer",
   "docs_qa_validate_answer_with_persona",
   "qa_common",
+  "no_dspy",
+  "cloudflare_mcp",
+  "echo_server_mcp",
 ]
